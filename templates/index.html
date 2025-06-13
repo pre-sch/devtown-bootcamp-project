@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Boston Housing Price Prediction</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        .form-container {
+            background: #1e3c72;
+            background: linear-gradient(to bottom right, #2a5298, #1e3c72);
+            border-radius: 20px;
+            padding: 40px 30px;
+            width: 90%;
+            max-width: 650px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 28px;
+            color: #e6f1ff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+            color: #d0e7ff;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 12px;
+            background-color: #eef3fb;
+            color: #1c1c1c;
+            font-size: 1rem;
+            box-shadow: inset 1px 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            transform: scale(1.02);
+        }
+
+        input[type="submit"] {
+            grid-column: span 2;
+            padding: 14px;
+            font-size: 1rem;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        input[type="submit"]:hover {
+            transform: scale(1.03);
+            background: linear-gradient(to right, #0072ff, #00c6ff);
+        }
+
+        h3 {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 1.3rem;
+            color: #9fe3ff;
+        }
+
+        @media (max-width: 600px) {
+            form {
+                grid-template-columns: 1fr;
+            }
+
+            input[type="submit"] {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Boston Housing Price Prediction</h2>
+        <form action="/predict" method="post">
+
+            <div>
+                <label>CRIM:</label>
+                <input type="text" name="CRIM">
+            </div>
+
+            <div>
+                <label>ZN:</label>
+                <input type="text" name="ZN">
+            </div>
+
+            <div>
+                <label>INDUS:</label>
+                <input type="text" name="INDUS">
+            </div>
+
+            <div>
+                <label>CHAS:</label>
+                <input type="text" name="CHAS">
+            </div>
+
+            <div>
+                <label>NOX:</label>
+                <input type="text" name="NOX">
+            </div>
+
+            <div>
+                <label>RM:</label>
+                <input type="text" name="RM">
+            </div>
+
+            <div>
+                <label>AGE:</label>
+                <input type="text" name="AGE">
+            </div>
+
+            <div>
+                <label>DIS:</label>
+                <input type="text" name="DIS">
+            </div>
+
+            <div>
+                <label>RAD:</label>
+                <input type="text" name="RAD">
+            </div>
+
+            <div>
+                <label>TAX:</label>
+                <input type="text" name="TAX">
+            </div>
+
+            <div>
+                <label>PTRATIO:</label>
+                <input type="text" name="PTRATIO">
+            </div>
+
+            <div>
+                <label>B:</label>
+                <input type="text" name="B">
+            </div>
+
+            <div>
+                <label>LSTAT:</label>
+                <input type="text" name="LSTAT">
+            </div>
+
+            <input type="submit" value="Predict">
+
+        </form>
+
+        {% if prediction_text %}
+            <h3>{{ prediction_text }}</h3>
+        {% endif %}
+    </div>
+</body>
+</html>
