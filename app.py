@@ -1,41 +1,18 @@
 from flask import Flask, render_template, request
-import pickle
 import numpy as np
+import pandas as pd
+import joblib
 
 app = Flask(__name__)
+model = joblib.load("model.pkl")
 
-with open('house_price_prediction.pkl','rb') as f:
-    model=pickle.load(f);
-    
-@app.route('/')
-def home():
-    return render_template('index.html')
-
-@app.route('/predict', methods=['POST'])
-def predict():
-    features = [
-        float(request.form['CRIM']),
-        float(request.form['ZN']),
-        float(request.form['INDUS']),
-        float(request.form['CHAS']),
-        float(request.form['NOX']),
-        float(request.form['RM']),
-        float(request.form['AGE']),
-        float(request.form['DIS']),
-        float(request.form['RAD']),
-        float(request.form['TAX']),
-        float(request.form['PTRATIO']),
-        float(request.form['B']),
-        float(request.form['LSTAT'])
-    ]
-    
-    features_array = np.array([features])
-    
-    prediction = model.predict(features_array)
-    output = round(prediction[0],2)
-    
-    return render_template('index.html', prediction_text=f"Predicted Price: {output}")
-
+@app.route("/", methods=["GET", "POST"])
+def index():
+    prediction = None
+    if request.method == "POST":
+        features = [float(request.form.get(f)) for f in request.form]
+        prediction = model.predict([features])[0]
+    return render_template("index.html", prediction=prediction)
 
 if __name__ == "__main__":
     app.run(debug=True)
